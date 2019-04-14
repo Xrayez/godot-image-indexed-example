@@ -85,12 +85,12 @@ func _build_palette():
 
 	var image
 
-	var import_png_filename_ext = import_png_filename + ".png"
+	var import_path = IMPORT_PNG_PATH + import_png_filename + ".png"
 	var file = File.new()
 
-	if not import_png_filename.empty() and file.file_exists(import_png_filename_ext):
+	if not import_png_filename.empty() and file.file_exists(import_path):
 		image = Image.new()
-		image.load(IMPORT_PNG_PATH + import_png_filename_ext)
+		image.load(import_path)
 	else:
 		image = texture.get_data()
 

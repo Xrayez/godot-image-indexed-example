@@ -28,7 +28,4 @@ margin_bottom = 256.0
 rect_min_size = Vector2( 256, 256 )
 custom_constants/vseparation = 0
 custom_constants/hseparation = 0
-account_for_alpha = false
-import_png_filename = "imported"
-export_png_filename = "exported"
 [connection signal="palette_applied" from="palette" to="." method="_on_palette_applied"]
