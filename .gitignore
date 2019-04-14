@@ -1,3 +1,4 @@
 .import
-export_indexed
-import_indexed
+
+export_indexed/*.png
+import_indexed/*.png
