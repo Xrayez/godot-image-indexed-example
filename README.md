@@ -1,0 +1,1 @@
+# Godot Image with palette support test project
