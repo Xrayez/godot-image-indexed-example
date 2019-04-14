@@ -11,8 +11,8 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 custom_constants/separation = 16
 script = ExtResource( 1 )
+populate_from_textures = false
 textures = [ ExtResource( 2 ), ExtResource( 3 ), ExtResource( 4 ) ]
-save_screenshot = true
 
 [node name="test" parent="." instance=ExtResource( 5 )]
 anchor_right = 0.0
