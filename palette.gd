@@ -15,7 +15,8 @@ export(DitherMode) var dithering = DitherMode.DITHER_NONE setget set_dithering
 export(bool) var account_for_alpha = true setget set_account_for_alpha
 export(bool) var high_quality = false setget set_high_quality
 
-export(bool) var modify = true
+export(bool) var can_generate = true
+export(bool) var can_modify = false
 
 const IMPORT_PNG_PATH = "res://import_indexed/"
 const EXPORT_PNG_PATH = "res://export_indexed/"
@@ -87,19 +88,26 @@ func _build_palette():
 
 	var image
 
-	var import_path = IMPORT_PNG_PATH + import_png_filename + ".png"
+	var import_path = IMPORT_PNG_PATH + import_png_filename
 	var file = File.new()
 
 	var imported = false
 
-	if not import_png_filename.empty() and file.file_exists(import_path):
-		image = Image.new()
-		image.load(import_path)
-		imported = true
+	if not import_png_filename.empty():
+		if file.file_exists(import_path):
+			image = Image.new()
+			image.load(import_path)
+			imported = true
+			print("Loaded: ", import_path)
+		else:
+			print("Could not load image: ", import_path)
+			return
 	else:
 		image = texture.get_data()
 
-	if modify:
+	assert(image)
+
+	if can_generate:
 		image.convert(Image.FORMAT_RGBA8) # must convert
 
 		var _mean_error = image.generate_palette(
@@ -107,22 +115,36 @@ func _build_palette():
 
 		image.apply_palette()
 
+	if can_modify:
 		modify_palette(image)
+
+	var palette = PoolColorArray([])
+	if image.has_palette():
+		palette = image.palette
+		print("Palette size: ", image.get_palette_size())
+		print("First color: ", palette[0])
+		print("Last color: ", palette[-1])
 
 	# Visualize palette
 	for idx in get_child_count():
 		get_child(idx).queue_free()
 
-	var palette = image.palette
+	var c_idx = 0
 
 	for color in palette:
+		var color_test = image.get_palette_color(c_idx)
+		assert(color == color_test)
+
 		var cr = ColorRect.new()
 		cr.rect_min_size = color_size
 		cr.color = color
 		add_child(cr)
 
+		c_idx += 1
+
 	if not export_png_filename.empty():
-		image.save_png(EXPORT_PNG_PATH + export_png_filename + ".png")
+		assert(export_png_filename.get_extension() == "png")
+		image.save_png(EXPORT_PNG_PATH + export_png_filename)
 
 	emit_signal("palette_applied", image)
 
@@ -131,7 +153,7 @@ func _build_palette():
 
 func modify_palette(p_image):
 	assert(p_image.has_palette())
-	# _modify_palette_custom(p_image)
+#	_modify_palette_custom(p_image)
 
 
 func _modify_palette_custom(p_image):

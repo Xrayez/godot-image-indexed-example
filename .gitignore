@@ -1,4 +1,7 @@
 .import
 
-export_indexed/*.png
 import_indexed/*.png
+import_indexed/*.tga
+import_indexed/*.bmp
+
+export_indexed/*.png
