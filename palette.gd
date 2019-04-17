@@ -15,8 +15,10 @@ export(DitherMode) var dithering = DitherMode.DITHER_NONE setget set_dithering
 export(bool) var account_for_alpha = true setget set_account_for_alpha
 export(bool) var high_quality = false setget set_high_quality
 
-const EXPORT_PNG_PATH = "res://export_indexed/"
+export(bool) var modify = true
+
 const IMPORT_PNG_PATH = "res://import_indexed/"
+const EXPORT_PNG_PATH = "res://export_indexed/"
 
 export(String) var import_png_filename = "" setget set_import_png_filename
 export(String) var export_png_filename = "" setget set_export_png_filename
@@ -88,18 +90,24 @@ func _build_palette():
 	var import_path = IMPORT_PNG_PATH + import_png_filename + ".png"
 	var file = File.new()
 
+	var imported = false
+
 	if not import_png_filename.empty() and file.file_exists(import_path):
 		image = Image.new()
 		image.load(import_path)
+		imported = true
 	else:
 		image = texture.get_data()
 
-	image.convert(Image.FORMAT_RGBA8) # must convert
+	if modify:
+		image.convert(Image.FORMAT_RGBA8) # must convert
 
-	var _mean_error = image.generate_palette(
-		num_colors, dithering, account_for_alpha, high_quality)
+		var _mean_error = image.generate_palette(
+			num_colors, dithering, account_for_alpha, high_quality)
 
-	image.apply_palette()
+		image.apply_palette()
+
+		modify_palette(image)
 
 	# Visualize palette
 	for idx in get_child_count():
@@ -119,3 +127,12 @@ func _build_palette():
 	emit_signal("palette_applied", image)
 
 	_update_queued = false
+
+
+func modify_palette(p_image):
+	assert(p_image.has_palette())
+	# _modify_palette_custom(p_image)
+
+
+func _modify_palette_custom(p_image):
+	p_image.set_palette_color(0, Color.black)

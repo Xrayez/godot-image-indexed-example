@@ -1,8 +1,8 @@
 [gd_scene load_steps=6 format=2]
 
 [ext_resource path="res://main.gd" type="Script" id=1]
-[ext_resource path="res://samples/map-saturation.png" type="Texture" id=2]
-[ext_resource path="res://samples/map-brightness.png" type="Texture" id=3]
+[ext_resource path="res://samples/png24-s.png" type="Texture" id=2]
+[ext_resource path="res://samples/png24-b.png" type="Texture" id=3]
 [ext_resource path="res://samples/logo.png" type="Texture" id=4]
 [ext_resource path="res://preview_panel.tscn" type="PackedScene" id=5]
 
@@ -19,6 +19,5 @@ anchor_right = 0.0
 anchor_bottom = 0.0
 margin_right = 1024.0
 margin_bottom = 256.0
-texture = ExtResource( 3 )
 
 [editable path="test"]

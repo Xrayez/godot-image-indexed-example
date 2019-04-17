@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/map-brightness.png-abf2d0653e42607653cba68437136038.stex"
+path="res://.import/bmp24.bmp-6aa70bd925bb7ddf7a22802b14a52343.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://samples/map-brightness.png"
-dest_files=[ "res://.import/map-brightness.png-abf2d0653e42607653cba68437136038.stex" ]
+source_file="res://samples/bmp/bmp24.bmp"
+dest_files=[ "res://.import/bmp24.bmp-6aa70bd925bb7ddf7a22802b14a52343.stex" ]
 
 [params]
 
