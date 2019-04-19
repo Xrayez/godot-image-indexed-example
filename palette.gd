@@ -15,8 +15,8 @@ export(DitherMode) var dithering = DitherMode.DITHER_NONE setget set_dithering
 export(bool) var account_for_alpha = true setget set_account_for_alpha
 export(bool) var high_quality = false setget set_high_quality
 
-export(bool) var can_generate = true
-export(bool) var can_modify = false
+export(bool) var can_generate = true setget set_can_generate
+export(bool) var can_modify = true setget set_can_modify
 
 const IMPORT_PNG_PATH = "res://import_indexed/"
 const EXPORT_PNG_PATH = "res://export_indexed/"
@@ -54,6 +54,16 @@ func set_account_for_alpha(p_account_for_alpha):
 
 func set_high_quality(p_high_quality):
 	high_quality = p_high_quality
+	_queue_update()
+
+
+func set_can_generate(p_can):
+	can_generate = p_can
+	_queue_update()
+
+
+func set_can_modify(p_can):
+	can_modify = p_can
 	_queue_update()
 
 
@@ -113,10 +123,10 @@ func _build_palette():
 		var _mean_error = image.generate_palette(
 			num_colors, dithering, account_for_alpha, high_quality)
 
-		image.apply_palette()
-
 	if can_modify:
-		modify_palette(image)
+		if image.has_palette():
+			modify_palette(image)
+			image.apply_palette()
 
 	var palette = PoolColorArray([])
 	if image.has_palette():
@@ -157,4 +167,6 @@ func modify_palette(p_image):
 
 
 func _modify_palette_custom(p_image):
-	p_image.set_palette_color(0, Color.black)
+	p_image.set_palette_color(5, Color.red)
+	p_image.set_palette_color(9, Color.gold)
+	p_image.set_palette_color(1, Color.darkred)
