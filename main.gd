@@ -15,18 +15,17 @@ func _ready():
 
 func _save_screenshot():
 	# Render
-	get_viewport().render_target_v_flip = true # hmm
 	yield(VisualServer, "frame_post_draw")
-	get_viewport().render_target_v_flip = false
 
 	var screenshot = get_viewport().get_texture().get_data()
+	screenshot.flip_y() # render target is v-flipped
 	screenshot.save_png("res://export_indexed/screenshot.png") # regular
 
 	screenshot.convert(Image.FORMAT_RGBA8)
 	screenshot.generate_palette()
 	screenshot.save_png("res://export_indexed/screenshot_indexed.png")
 
-	# Indexed "lossy compression" ratio: at least 4/1
+	# Indexed compression ratio: at least 4/1
 
 
 func set_textures(p_textures):
