@@ -91,7 +91,29 @@ func _queue_update():
 
 
 func _ready():
+	test_set_indexed()
 	_queue_update()
+
+
+func test_set_indexed():
+	var img = ImageIndexed.new()
+	img.create(100, 100, false, Image.FORMAT_RGBA8)
+	img.create_indexed(2)
+	img.set_palette_color(1, Color.red)
+
+	img.lock_indexed()
+	img.set_pixel_indexed(50, 50, 1)
+	img.set_pixel_indexed(51, 50, 1)
+	img.set_pixel_indexed(52, 50, 1)
+	img.set_pixel_indexed(53, 50, 1)
+
+	var index = img.get_pixel_indexed(53, 50)
+	assert(index == 1)
+
+	img.unlock_indexed()
+
+	img.apply_palette()
+#	img.save_png("set_indexed.png")
 
 
 func _build_palette():
@@ -105,8 +127,9 @@ func _build_palette():
 
 	if not import_png_filename.empty():
 		if file.file_exists(import_path):
-			image = Image.new()
-			image.load(import_path)
+			image = ImageIndexed.new()
+#			image.load(import_path)
+			image.load_indexed_png(import_path)
 			imported = true
 			print("Loaded: ", import_path)
 		else:
@@ -114,6 +137,9 @@ func _build_palette():
 			return
 	else:
 		image = texture.get_data()
+		var indexed = ImageIndexed.new()
+		indexed.copy_from(image)
+		image = indexed
 
 	assert(image)
 
@@ -154,7 +180,7 @@ func _build_palette():
 
 	if not export_png_filename.empty():
 		assert(export_png_filename.get_extension() == "png")
-		image.save_png(EXPORT_PNG_PATH + export_png_filename)
+		image.save_indexed_png(EXPORT_PNG_PATH + export_png_filename)
 
 	emit_signal("palette_applied", image)
 

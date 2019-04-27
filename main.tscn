@@ -20,4 +20,10 @@ anchor_bottom = 0.0
 margin_right = 1024.0
 margin_bottom = 256.0
 
+[node name="palette" parent="test" index="2"]
+dithering = 1
+can_generate = false
+import_png_filename = "logo.png"
+export_png_filename = "logo.png"
+
 [editable path="test"]

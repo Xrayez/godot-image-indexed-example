@@ -15,7 +15,7 @@ _global_script_class_icons={
 
 [application]
 
-config/name="image-paletted"
+config/name="image-indexed"
 run/main_scene="res://main.tscn"
 config/icon="res://icon.png"
 
