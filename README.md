@@ -1,3 +1,5 @@
-# Godot Image with palette support test project
+# Godot ImageIndexed
 
-See https://github.com/godotengine/godot/pull/28013/
+An example project showcasing `ImageIndexed` class.
+
+Part of [ImageTools](https://github.com/Xrayez/godot-imagetools) module.

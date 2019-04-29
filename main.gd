@@ -44,3 +44,6 @@ func _populate_previews(p_textures):
 		var pp = PreviewPanel.instance()
 		pp.texture = tex
 		add_child(pp)
+
+func _on_palette_applied():
+	pass # Replace with function body.
